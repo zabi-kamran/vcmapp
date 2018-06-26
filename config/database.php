@@ -69,11 +69,10 @@ return [
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('DB_HOST', 'testvcm.database.windows.net'),
+            'database' => env('DB_DATABASE', 'vcm'),
+            'username' => env('DB_USERNAME', 'peter'),
+            'password' => env('DB_PASSWORD', '36FtfV19VOeo'),
             'charset' => 'utf8',
             'prefix' => '',
         ],
