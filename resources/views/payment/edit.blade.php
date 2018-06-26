@@ -1,0 +1,212 @@
+@extends('layout.app')
+@section('title','Add New Record')
+@push('headerscript')
+@endpush
+@section('content')
+ <!-- Main content -->
+            <div class="content-wrapper">
+                   <div class="page-header">
+                    <div class="page-header-content">
+                        <div class="page-title">
+                            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Add New Record</span></h4>
+
+                        <div class="heading-elements">
+                           <a href="{{ route('payment.index') }}" class="btn bg-brown btn-labeled heading-btn"><b><i class="icon-arrow-left15"></i></b> Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!-- /page header -->
+
+
+                <!-- Content area -->
+                <div class="content">
+                    <!-- Basic table -->
+                  <!-- Wizard with validation -->
+                    <div class="panel panel-white">
+                        <div class="panel-heading">
+                            <h6 class="panel-title">Fill the Form</h6>
+                            <div class="heading-elements">
+                              
+                            </div>
+                        </div>
+
+                        {!! Form::model($row, ['method' => 'PATCH','class'=>'steps-validation','role'=>'form','route' => ['payment.update',$row->id]]) !!}
+                            <div class="panel panel-flat">
+                                    <div class="panel-body">
+                               <div class="row">
+                                 <div class="form-group">
+                                <div class="col-md-4">
+                                            <label>State Name <span class="text-danger">*</span></label>
+                                            {!! Form::select('state',[''=>'Select State Name'] + CommonClass::geStates(), old('state',$row->state), ['class'=>'form-control required','required','id'=>'state','onchange'=>'stateby()']) !!}
+                                           <div class="text-danger">{{ $errors->first('state') }}</div>
+                                        </div>
+                                    <div class="col-md-4">
+                                            <label>LGA<span class="text-danger">*</span></label>
+                                             {!! Form::select('lga',[''=>'Select LGA'], old('lga',$row->lga), ['class'=>'form-control required','required','id'=>'lga','onchange'=>'lgaby()']) !!}
+                                             <div class="text-danger">{{ $errors->first('lga') }}</div>
+                                        </div>
+                                <div class="col-md-4">
+                                            <label>Ward <span class="text-danger">*</span></label>
+                                            {!! Form::select('ward',[''=>'Select Ward Name'], old('ward',$row->ward), ['class'=>'form-control required','required','id'=>'ward']) !!}
+                                            <div class="text-danger">{{ $errors->first('ward') }}</div>
+                                    </div>
+                                </div> 
+                            </div>
+                               <div class="row">
+                                 <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label>First Name <span class="text-danger">*</span></label>
+                                            <input type="text" name="fname" placeholder="First name" class="form-control" required value="{{ old('fname',$row->fname) }}">
+                                            <div class="text-danger">{{ $errors->first('fname') }}</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Last Name <span class="text-danger">*</span></label>
+                                            <input type="text" name="lname" placeholder="Last name" class="form-control" value="{{ old('lname',$row->lname) }}" required="">
+                                            <div class="text-danger">{{ $errors->first('lname') }}</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Mother Name <span class="text-danger">*</span></label>
+                                            <input type="text" name="mother_name" placeholder="Mother name" class="form-control" value="{{ old('mother_name',$row->mother_name) }}" required="">
+                                            <div class="text-danger">{{ $errors->first('mother_name') }}</div>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row">
+                                     <div class="form-group">
+                                    <div class="col-md-4">
+                                           <div class="form-group">
+                                        <label class="display-block text-semibold">Gender <span class="text-danger">*</span></label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="gender" class="styled" checked="checked" value="0" {{ (old('gender',$row->gender) == 0) ? 'checked' : '' }}>
+                                            Male
+                                        </label>
+
+                                        <label class="radio-inline">
+                                            <input type="radio" name="gender" class="styled" value="1" {{ (old('gender',$row->gender) == 1) ? 'checked' : '' }}>
+                                            Female
+                                        </label>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                         <label>DOB  <span class="text-danger">*</span></label>
+                                        <input type="date" class="form-control required" name="dob" placeholder="Enter Birth Date date"  value="{{ old('dob',date('Y-m-d',strtotime($row->dob))) }}" required="">
+                                        <span class="help-block">05/31/1990</span>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                             <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                            <label>GSM Net <span class="text-danger">*</span></label>
+                                            {!! Form::select('gsm_net',[''=>'Select GSM Net'] + CommonClass::getGsmNet(), old('gsm_net',$row->gsm_net), ['class'=>'form-control required','required']) !!}
+                                            <div class="text-danger">{{ $errors->first('gsm_net') }}</div>
+                                        </div>
+                                     <div class="col-md-4">
+                                            <label>GSM No <span class="text-danger">*</span></label>
+                                            <input type="text" name="gsm_no" class="form-control required" placeholder="GSM No" value="{{ old('gsm_no',$row->gsm_no) }}" required="">
+                                            <div class="text-danger">{{ $errors->first('gsm_no') }}</div>
+                                        </div>
+                                    <div class="col-md-4">
+                                            <label>Category <span class="text-danger">*</span></label>
+                                            {!! Form::select('category',[''=>'Select Category Name'] + CommonClass::getCategory(), old('category',$row->category), ['class'=>'form-control required','required']) !!}
+                                            <div class="text-danger">{{ $errors->first('category') }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                    <div class="col-md-4">
+                                            <label>Pay Amount <span class="text-danger">*</span></label>
+                                            <input type="text" name="pay_amt" onkeyup="PayAmt()" id="pay_amt" value="{{ old('pay_amt',$row->pay_amt) }}" class="form-control required">
+                                            <div class="text-danger">{{ $errors->first('pay_amt') }}</div>
+                                        </div>
+                                    <div class="col-md-4">
+                                            <label>Other <span class="text-danger">*</span></label>
+                                            <input type="text" name="other" onkeyup="Others()" id="others" class="form-control" value="{{ old('other',$row->other) }}" required="">
+                                        </div>
+                                    <div class="col-md-4">
+                                            <label>Total <span class="text-danger">*</span></label>
+                                            <input type="text" name="total" id="total" class="form-control required" readonly=""  value="{{ old('total',$row->total) }}" required="">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                           <div class="row">
+                               <div class="form-group">
+                                    <div class="text-right">
+                                            <button type="submit" class="btn btn-primary">Submit form <i class="icon-arrow-right14 position-right"></i></button>
+                                        </div>
+                               </div>
+                           </div>
+                        </form>
+                    </div>
+                    
+                </div>
+                <!-- /content area -->
+
+            </div>
+            
+            <!-- /main content -->
+@push('footerscript')
+    <script>
+    function PayAmt(){
+        calculate();
+    }
+    function Others(){
+        calculate();
+    }
+    function calculate(){
+        var pay_amt=$("#pay_amt").val();
+        var others=$("#others").val();
+        var total=+pay_amt + +others;
+        $("#total").val(total);
+    }
+        $(document).ready(function(){
+            stateby({{ $row->lga }});
+        });
+    function stateby(selectvalues){
+        var state_id=$("#state").val();
+        $.ajax({
+            url: '{{ url('Helpers/CommonClass/lgsist') }}/'+state_id,
+            type: 'get',
+            dataType: "json",
+            success:function(data){
+                $('select[name="lga"]').empty();
+                $('select[name="lga"]').append('<option value="" >Select LGA</option>');
+                $.each(data, function(key, value) {
+                if (selectvalues == key){
+                        $('select[name="lga"]').append('<option value="'+ key +'" selected>'+ value +'</option>');
+                    }else{
+                    $('select[name="lga"]').append('<option value="'+ key +'">'+ value +'</option>');
+                    }
+                    });
+                lgaby({{ $row->lga }});
+            }
+        });
+    } 
+    function lgaby(selectvalues){
+        var lga_id=$("#lga").val();
+        $.ajax({
+            url: '{{ url('Helpers/CommonClass/wardlist') }}/'+lga_id,
+            type: 'get',
+            dataType: "json",
+            success:function(data){
+                $('select[name="ward"]').empty();
+                $('select[name="ward"]').append('<option value="" >Select Ward</option>');
+                $.each(data, function(key, value) {
+                    if (selectvalues == key){
+                        $('select[name="ward"]').append('<option value="'+ key +'" selected>'+ value +'</option>');
+                    }else{
+                    $('select[name="ward"]').append('<option value="'+ key +'">'+ value +'</option>');
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+@endpush
+@endsection
