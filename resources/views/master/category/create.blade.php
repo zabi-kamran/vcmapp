@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('title','Add Category Master')
 @section('content')
+
  <!-- Main content -->
             <div class="content-wrapper">
                    <div class="page-header">
@@ -18,6 +19,7 @@
 
                 <!-- Content area -->
                 <div class="content">
+
                     <!-- Basic table -->
                     <div class="panel panel-flat">
                        <form action="{{ route('categorymaster.store') }}" class="form-horizontal" method="post">

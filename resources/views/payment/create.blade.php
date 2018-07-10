@@ -35,6 +35,8 @@
                             {{ csrf_field() }}
                             <div class="panel panel-flat">
                                     <div class="panel-body">
+                                     <h2>New Record </h2>
+                                                            <hr>
                                <div class="row">
                                  <div class="form-group">
                                 <div class="col-md-4">
@@ -96,8 +98,24 @@
                                         <span class="help-block">05/31/1990</span>
                                         </div>
                                 </div>
+                                <div class="col-md-4">
+                                                                <label> Status </label>
+                                                                <select class="form-control" name="status">
+                                                                <option value="1"> Active </option>
+                                                                <option value="0"> Inactive </option>
+                                                                 <option value="-1"> Delisted </option>
+
+                                                                </select>
+                                                                 <div class="text-danger">{{ $errors->first('status') }}</div>
+                                                                </div>
+
+
+
                             </div>
                         </div>
+                        <h2> Payment </h2>
+                        <hr>
+
                              <div class="row">
                                 <div class="form-group">
                                     <div class="col-md-4">
@@ -112,7 +130,16 @@
                                         </div>
                                     <div class="col-md-4">
                                             <label>Category <span class="text-danger">*</span></label>
-                                            {!! Form::select('category',[''=>'Select Category Name'] + CommonClass::getCategory(), old('category'), ['class'=>'form-control required','required']) !!}
+                                            <select name="category" class="form-control">
+                                            <?php  $cat=CommonClass::getCategory(); ?>
+
+                                            @foreach( $cat as $c)
+                                            <option value="{{ $c->id }}"> {{ $c->category_name }}</option>
+
+                                            @endforeach
+
+                                            </select>
+
                                             <div class="text-danger">{{ $errors->first('category') }}</div>
                                     </div>
                                 </div>
@@ -133,6 +160,50 @@
                                             <input type="text" name="total" id="total" class="form-control required" readonly=""  value="{{ old('total') }}" required="">
                                     </div>
                                 </div>
+
+                                <h2> Next of kin </h2>
+                                <hr>
+                                <div class="row">
+                                <div class="col-md-4">
+                                   <label> Next of kin - Name  </label>
+                                   <input tyle="text" class="form-control"  value="{{ old('name') }}" name="name" placeholder="Enter Name">
+                                    <div class="text-danger">{{ $errors->first('name') }}</div>
+                                </div>
+                                <div class="col-md-4">
+                                <label>  Next of kin - Relation </label>
+                                <select class="form-control" name="relation">
+
+                                 <option value="Parent"> Parent (Father, Mother) </option>
+                                 <option value="Child"> Child (Son, Sister) </option>
+                                  <option value="Sibling">Sibling (Brother, Sister)</option>
+                                  <option value="Spouse"> Spouse (Husband, Wife) </option>
+                                  <option value="Other"> Other</option>
+
+                                </select>
+
+
+                                </div>
+                                <div class="col-md-4">
+                                <label> Next of kin- Phone </label>
+                                <input type="text" name="phone" class="form-control" value="{{ old('phone') }}"/>
+                                 <div class="text-danger">{{ $errors->first('phone') }}</div>
+
+                                </div>
+
+                                </div>
+                                <h1>Comments</h1>
+                                <hr>
+                                <div class="row">
+                                <div class="col-md-12">
+                                <label> Comments </label>
+                                <textarea class="form-control" name="comments" value="{{ old('comments') }}"></textarea>
+                                 <div class="text-danger">{{ $errors->first('comments') }}</div>
+
+                                </div>
+
+                                </div>
+
+
                             </div>
                             <br>
                            <div class="row">

@@ -8,7 +8,7 @@
                    <div class="page-header">
                     <div class="page-header-content">
                         <div class="page-title">
-                            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Add New Record</span></h4>
+                            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Edit Record</span></h4>
 
                         <div class="heading-elements">
                            <a href="{{ route('payment.index') }}" class="btn bg-brown btn-labeled heading-btn"><b><i class="icon-arrow-left15"></i></b> Back</a>
@@ -34,6 +34,8 @@
                         {!! Form::model($row, ['method' => 'PATCH','class'=>'steps-validation','role'=>'form','route' => ['payment.update',$row->id]]) !!}
                             <div class="panel panel-flat">
                                     <div class="panel-body">
+                                    <h2> Edit Record </h2>
+                                    <hr>
                                <div class="row">
                                  <div class="form-group">
                                 <div class="col-md-4">
@@ -95,8 +97,21 @@
                                         <span class="help-block">05/31/1990</span>
                                         </div>
                                 </div>
+                                <div class="col-md-4">
+                                                                                                <label> Status </label>
+                                                                                                <select class="form-control" name="status">
+                                                                                                <option value="1" @if($row->status=='1') selected @endif> Active </option>
+                                                                                                <option value="0" @if($row->status=='0') selected @endif> Inactive </option>
+                                                                                                 <option value="-1" @if($row->status=='-1') selected @endif> Delisted </option>
+
+                                                                                                </select>
+                                                                                                 <div class="text-danger">{{ $errors->first('status') }}</div>
+                                                                                                </div>
                             </div>
                         </div>
+
+                        <h2> Payment </h2>
+                            <hr>
                              <div class="row">
                                 <div class="form-group">
                                     <div class="col-md-4">
@@ -133,6 +148,50 @@
                                     </div>
                                 </div>
                             </div>
+
+                                <h2> Next of kin </h2>
+                                <hr>
+                              <div class="row" style="padding-top:10px;">
+                                                            <div class="col-md-4">
+                                                               <label> Next of kin - Name  </label>
+                                                               <input tyle="text" class="form-control"  value="{{ $row->name }}" name="name" placeholder="Enter Name">
+
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                            <label>  Next of kin - Relation </label>
+                                                            <select class="form-control" name="relation">
+
+                                                             <option value="Parent" @if($row->relation=='Parent') selected  @endif> Parent (Father, Mother) </option>
+                                                             <option value="Child" @if($row->relation=='Child') selected  @endif> Child (Son, Sister) </option>
+                                                              <option value="Sibling" @if($row->relation=='Sibling') selected  @endif>Sibling (Brother, Sister)</option>
+                                                              <option value="Spouse" @if($row->relation=='Spouse') selected  @endif> Spouse (Husband, Wife) </option>
+                                                              <option value="Other"  @if($row->relation=='Other') selected  @endif> Other</option>
+
+                                                            </select>
+
+
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                            <label> Next of kin- Phone </label>
+                                                            <input type="text" name="phone" class="form-control" value="{{ $row->phone }}"/>
+                                                             <div class="text-danger">{{ $errors->first('phone') }}</div>
+
+                                                            </div>
+
+                                                            </div>
+
+                                                            <div class="row">
+                                                            <div class="col-md-12">
+                                                            <label> Comments </label>
+                                                            <textarea class="form-control" name="comments" >{{ $row->comments  }}</textarea>
+                                                             <div class="text-danger">{{ $errors->first('comments') }}</div>
+
+                                                            </div>
+
+                                                            </div>
+
+
+                                                        </div>
                             <br>
                            <div class="row">
                                <div class="form-group">

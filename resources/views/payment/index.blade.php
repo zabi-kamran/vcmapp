@@ -37,7 +37,8 @@
                                     <th>Ward</th>
                                     <th>Category</th>
                                     <th>Amount</th>
-                                    <th>Edit/Delate</th>
+                                    <th>Status </th>
+                                    <th>Edit/Delete</th>
                                 </tr>
                             </thead>
                         </table>
@@ -87,6 +88,7 @@
             { data: 'ward_name', name: 'wards.ward_name' },
             { data: 'category_name', name: 'categories.category_name' },
             { data: 'total', name: 'total' },
+            {data: 'status',name:'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
        });

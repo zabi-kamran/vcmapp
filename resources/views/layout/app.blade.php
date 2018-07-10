@@ -14,6 +14,7 @@
     <link href="{{ asset('theme/assets/css/core.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('theme/assets/css/components.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('theme/assets/css/colors.css') }}" rel="stylesheet" type="text/css">
+
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
@@ -87,18 +88,44 @@
                                 <!-- Main -->
                                 <li class="navigation-header"><span>Start</span> <i class="icon-menu" title="Main pages"></i></li>
                                 
-                                <li><a href="{{ route('payment.index') }}"><i class="icon-paypal2"></i> <span>Payments Dashboard</span></a></li>
+
+
+
+
+
+                                     <li><a href="{{ route('payment.index') }}"><i class="icon-paypal2"></i> <span>Payment Management</span></a></li>
+                                @if(\Illuminate\Support\Facades\Auth::user()->isadmin==1)
+                                        <li><a href='{{ route("payment.search") }}'><i class="icon-paypal2"></i> <span>Search Payment</span></a></li>
+
+
+                                                        @endif
+
+										@if(\Illuminate\Support\Facades\Auth::user()->isadmin==1)
+				<li class="">
+                                                    <a href="#" class="has-ul"><i class="icon-database"></i> <span>User Management</span></a>
+                                                    <ul class="hidden-ul" style="display: none;">
+
+                                                        <li><a href="{{ route('users.index') }}">All Users</a></li>
+                                                         <li><a href="{{ route('users.create') }}">Create Users</a></li>
+                                                    </ul>
+                                                </li>
+                                @endif
+
 								<li><a href="{{ url('home') }}"><i class="icon-megaphone"></i> <span>Send Message</span></a></li>
+
+                               @if(\Illuminate\Support\Facades\Auth::user()->isadmin==1)
                                <li class="">
                                     <a href="#" class="has-ul"><i class="icon-database"></i> <span>Master Data</span></a>
                                     <ul class="hidden-ul" style="display: none;">
-                                        <li><a href="{{ route('statemaster.index') }}">States</a></li> 
+                                        <li><a href="{{ route('statemaster.index') }}">States</a></li>
                                         <li><a href="{{ route('lgamaster.index') }}">LGA</a></li>
                                         <li><a href="{{ route('wardmaster.index') }}">Ward</a></li>
-                                        <li><a href="{{ route('categorymaster.index') }}">Category</a></li> 
+                                        <li><a href="{{ route('categorymaster.index') }}">Category</a></li>
                                         <li><a href="{{ route('gsmmaster.index') }}">GSM</a></li>
                                     </ul>
                                 </li>
+
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -108,8 +135,8 @@
             </div>
             <!-- /main sidebar -->
 
-
            @section('content')
+
            @show
 
         </div>

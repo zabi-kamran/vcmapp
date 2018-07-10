@@ -2,10 +2,23 @@
 namespace App\Helpers;
 use DB;
 use Cart;
+use Illuminate\Support\Facades\Auth;
+
 class CommonClass{
 	
 	static function geStates(){
+
+
+        if(Auth::user()->isadmin==1)
+        {
 		return DB::table('states')->pluck('state_name','id')->toArray();
+        }
+        else
+        {
+
+            $state_id = DB::table('state_users')->where('user_id',Auth::id())->first()->state_id;
+            return DB::table('states')->where('id',$state_id)->pluck('state_name','id')->toArray();
+        }
 	}
 
 	static function getLga(){
@@ -27,7 +40,29 @@ class CommonClass{
 	}
 	
 	static function getCategory(){
-		return DB::table('categories')->pluck('category_name','id')->toArray();
+
+        if(Auth::user()->isadmin==1)
+        {
+
+            $data= DB::table('categories')->select('categories.category_name as category_name','categories.id as id')
+                ->get()
+                ->toArray();
+
+             return $data;
+        }
+        else
+        {
+            $data= DB::table('categories')
+                ->select('categories.category_name as category_name','categories.id as id')
+                ->join('user_categories','user_categories.cat_id','=','categories.id')
+                ->get()
+               ->toArray();
+
+            return $data;
+
+        }
+
+
 	}
 
 	static function getGsmNet(){
